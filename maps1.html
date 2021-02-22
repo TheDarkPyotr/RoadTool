@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+
+  
+
+  
+
+  
+
+
+
+  
+    
+      <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&.js"></script>
+    
+  
+
+  <style type="text/css">
+    #map_wrapper {
+    height: 400px;
+}
+
+#map_canvas {
+    width: 100%;
+    height: 100%;
+}
+  </style>
+
+  <title></title>
+
+  
+    
+
+
+
+
+
+
+<script type='text/javascript'>//<![CDATA[
+
+$(document).ready(function () {
+    var map;
+    var elevator;
+    var myOptions = {
+        zoom: 1,
+        center: new google.maps.LatLng(0, 0),
+        mapTypeId: 'terrain'
+    };
+    map = new google.maps.Map($('#map_canvas')[0], myOptions);
+
+    var addresses = ['Norway', 'Africa', 'Asia','North America','South America'];
+
+    for (var x = 0; x < addresses.length; x++) {
+        $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&key=AIzaSyAOjSn2b_827WDDiGVmNVmsQ8cUAimEPhY', null, function (data) {
+            var p = data.results[0].geometry.location
+            var latlng = new google.maps.LatLng(p.lat, p.lng);
+            new google.maps.Marker({
+                position: latlng,
+                map: map
+            });
+
+        });
+    }
+
+}); 
+</script>
+
+  
+</head>
+
+<body>
+ 
+ <div id="map_wrapper">
+    <div id="map_canvas" class="mapping"></div>
+</div>
+  
+  <script>
+  // tell the embed parent frame the height of the content
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "P2QhE"
+    }], "*")
+  }
+</script>
+
+</body>
+
+</html>
+
