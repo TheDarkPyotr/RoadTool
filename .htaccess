@@ -1,0 +1,29 @@
+ErrorDocument 404 /error.php
+ErrorDocument 403 /error.php
+Options +FollowSymlinks
+
+<Files .htaccess>
+deny from all
+</Files>
+<ifModule mod_php5.c>
+	php_value zlib.output_compression 16386
+	php_value register_globals off
+	php_value session.use_trans_sid 0
+</ifModule>
+<ifModule mod_rewrite.c>
+RewriteEngine on
+# Uncomment the line below if the site doesn't work and you have mod_rewrite installed.
+# RewriteBase /
+
+
+RewriteRule ^admin/home$ ./admin/home.php
+# RewriteRule ^admin/stop$ ./admin/stop.php
+RewriteRule ^admin/logout$ ./logout.php
+RewriteRule ^admin/passwordRecovery/(.*)$ ./admin/passwordRecovery.php?token=$1
+RewriteRule ^segnalazioni/(.*)$ ./segnalazioni.php?p=$1
+
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(([A-Za-z0-9\-_]+/)*[A-Za-z0-9\-_]+)?$ $1.php
+</ifModule>
